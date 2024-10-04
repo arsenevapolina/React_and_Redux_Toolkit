@@ -1,0 +1,7 @@
+.heading-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 588px;
+    margin-bottom: 24px;
+}

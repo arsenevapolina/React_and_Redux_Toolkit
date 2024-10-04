@@ -1,0 +1,88 @@
+.movie-card {
+    position: relative;
+    padding: 8px 8px 24px;
+    background: #20283ECC;
+    backdrop-filter: blur(80px);
+    border-radius: 12px;
+    max-width: 282px;
+}
+
+.poster-wrapper {
+    max-width: 266px;
+    max-height: 400px;
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.movie-poster {
+    width: 266px;
+    height: auto;
+    position: relative;
+}
+
+.top-content {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: flex;
+    align-items: center;
+    background: #000000A6;
+    backdrop-filter: blur(8px);
+    padding: 4px 8px;
+    border-radius: 8px;
+    gap: 4px;
+}
+
+.top-image {
+    width: 16px;
+    height: 16px;
+}
+
+.top-text {
+    color: #FFAD49;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.movie-title {
+    margin: 0px 0px 16px 8px;
+    color: #EBEEF5;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.02em;
+}
+
+.bottom-content {
+    display: flex;
+    gap: 8px;
+    margin: 0px 0px 0px 8px;
+    text-align: center;
+    align-items: center;
+}
+
+.bottom-text {
+    color: #7B6EF6;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.02em;
+    align-self: baseline;
+}
+
+.image-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.image-button:focus {
+    outline: none;
+}
+
+.bottom-image {
+    width: 100%;
+    height: auto;
+}
