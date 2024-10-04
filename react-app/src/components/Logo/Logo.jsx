@@ -1,7 +1,11 @@
 import "./Logo.css"; 
 
 function Logo() {
-  return <img className="logo" src="./public/logo.svg" alt="Логотип" />; 
+  return (
+    <a href="#" className="logo-link"> 
+      <img className="logo" src="./public/icons/logo.svg" alt="Логотип" />
+    </a>
+  ); 
 }
 
 export default Logo;

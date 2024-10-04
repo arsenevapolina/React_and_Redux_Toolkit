@@ -10,9 +10,16 @@
     font-weight: 600;
     line-height: 24px;
     letter-spacing: 0.02em;
-    text-decoration: none;
+    text-decoration: none;  
 }
 
 .link:hover, .link:active {
     color: #FFFFFF;
 }
+
+.image-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
