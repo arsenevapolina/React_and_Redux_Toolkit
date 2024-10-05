@@ -1,5 +1,10 @@
 import React from "react";
 import "./MovieCard.css";
+import "../Button/Button";
+import Button from "../Button/Button";
+import Rating from "../Rating/Rating";
+import Poster from "../Poster/Poster"; // Импортируем новый компонент
+import MovieTitle from "../MovieTitle/MovieTitle";
 
 const MovieCard = ({
   title,
@@ -12,20 +17,21 @@ const MovieCard = ({
   return (
     <div className="movie-card">
       <div className="poster-wrapper">
-        <img src={poster} alt={`${title} poster`} className="movie-poster" />
-        <div className="top-content">
-          <img src={topImage} alt="Star" className="top-image" />
-          <p className="top-text">{topText}</p>
-        </div>
+        <Poster src={poster} alt={`${title} poster`} className="movie-poster" />
+        <Rating image={topImage} text={topText} />
       </div>
-      <h3 className="movie-title">{title}</h3>
+      <MovieTitle text={title} />
       <div className="bottom-content">
-        <button
+        <Button
           className="image-button"
           onClick={() => console.log("Добавлено в избранное")}
         >
-          <img src={bottomImage} alt="Кнопка добавить" className="bottom-image" />
-        </button>
+          <img
+            src={bottomImage}
+            alt="Кнопка добавить"
+            className="bottom-image"
+          />
+        </Button>
         <p className="bottom-text">{bottomText}</p>
       </div>
     </div>
