@@ -63,7 +63,13 @@ function App() {
           onKeyDown={handleKeyPress}
           onButtonClick={() => console.log("Кнопка поиска нажата")}
         />
-        <Button onClick={handleButtonClick} text="Искать" />
+        <Button
+          onClick={handleButtonClick}
+          text="Искать"
+          className="button accent"
+        >
+          Искать
+        </Button>
       </Form>
       <MovieList movies={movies} />
     </div>
