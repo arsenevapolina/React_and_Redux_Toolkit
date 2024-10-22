@@ -13,6 +13,7 @@ import Navbar from "./layouts/Navbar/Navbar";
 import MovieList from "./components/MovieList/MovieList";
 import movies from "./moviesData";
 import AuthorizationForm from "./layouts/AuthorizationForm/AuthorizationForm";
+import { UserProvider } from "./components/context/UserContext";
 
 const text =
   "Введите название фильма, сериала или мультфильма для поиска и добавления в избранное.";
@@ -23,7 +24,7 @@ function App() {
     return storedProfiles ? JSON.parse(storedProfiles) : [];
   });
 
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState("");
 
   useEffect(() => {
     localStorage.setItem("profiles", JSON.stringify(profiles));
@@ -58,7 +59,7 @@ function App() {
             : profile
         )
       );
-      setLoggedInUser(null);
+      setLoggedInUser("");
     }
   };
 
@@ -90,56 +91,58 @@ function App() {
   };
 
   return (
-    <div className={styles.app}>
-      <Header>
-        <Navbar>
-          <Link>Поиск фильмов</Link>
-          <Link count={2} onCounterClick={handleCounterClick}>
-            Мои фильмы
-          </Link>
-          {loggedInUser ? (
-            <>
-              <Link img="./public/icons/avatar.svg">{loggedInUser.name}</Link>{" "}
-              <Link>
-                <Button onClick={handleLogout}>Выйти</Button>
-              </Link>
-            </>
-          ) : (
-            <Link>
-              Войти
-              <Button
-                img="./public/icons/entrance.svg"
-                onClick={clickWithoutValue}
-                className={`${button["button-link"]}`}
-              />
+    <UserProvider>
+      <div className={styles.app}>
+        <Header>
+          <Navbar>
+            <Link>Поиск фильмов</Link>
+            <Link count={2} onCounterClick={handleCounterClick}>
+              Мои фильмы
             </Link>
-          )}
-        </Navbar>
-      </Header>
-      <SectionTitle>
-        <Title>Поиск</Title>
-        <Paragraph>{text}</Paragraph>
-      </SectionTitle>
-      <Form>
-        <SearchInput
-          img="./public/icons/search.svg"
-          placeholder="Введите название"
-          value={inputValue}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyPress}
-          onButtonClick={() => console.log("Кнопка поиска нажата")}
-        />
-        <Button
-          onClick={handleButtonClick}
-          text="Искать"
-          className={`${button["button-base"]} ${button.accent}`}
-        >
-          Искать
-        </Button>
-      </Form>
-      <MovieList movies={movies} />
-      <AuthorizationForm onLogin={handleLogin} loggedInUser={loggedInUser} />
-    </div>
+            {loggedInUser ? (
+              <>
+                <Link img="./public/icons/avatar.svg">{loggedInUser.name}</Link>{" "}
+                <Link>
+                  <Button onClick={handleLogout}>Выйти</Button>
+                </Link>
+              </>
+            ) : (
+              <Link>
+                Войти
+                <Button
+                  img="./public/icons/entrance.svg"
+                  onClick={clickWithoutValue}
+                  className={`${button["button-link"]}`}
+                />
+              </Link>
+            )}
+          </Navbar>
+        </Header>
+        <SectionTitle>
+          <Title>Поиск</Title>
+          <Paragraph>{text}</Paragraph>
+        </SectionTitle>
+        <Form>
+          <SearchInput
+            img="./public/icons/search.svg"
+            placeholder="Введите название"
+            value={inputValue}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyPress}
+            onButtonClick={() => console.log("Кнопка поиска нажата")}
+          />
+          <Button
+            onClick={handleButtonClick}
+            text="Искать"
+            className={`${button["button-base"]} ${button.accent}`}
+          >
+            Искать
+          </Button>
+        </Form>
+        <MovieList movies={movies} />
+        <AuthorizationForm />
+      </div>
+    </UserProvider>
   );
 }
 

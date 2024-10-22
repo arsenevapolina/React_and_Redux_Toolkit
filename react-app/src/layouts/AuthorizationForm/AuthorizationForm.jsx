@@ -1,29 +1,31 @@
-import React, { useState } from "react";
 import Button from "../../components/Button/Button";
 import button from "../../components/Button/Button.module.css";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import Title from "../../components/Title/Title";
 import styles from "./AuthorizationForm.module.css";
+import React, { useState } from "react";
+import { useUserContext } from "../../components/context/UserContext";
 
-function AuthorizationForm({ onLogin, loggedInUser }) {
+function AuthorizationForm() {
+  const { loggedInUser, handleLogin, handleLogout } = useUserContext();
+
   const [userName, setUserName] = useState("");
 
   const handleInputChange = (e) => {
     setUserName(e.target.value);
   };
 
-  const handleLogin = () => {
+  const handleLog = () => {
     if (userName) {
-      onLogin(userName);
+      handleLogin(userName);
       setUserName("");
     }
-    console.log("Кнопка была нажата");
   };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      handleLogin();
+      handleLog();
     }
   };
 
@@ -37,7 +39,7 @@ function AuthorizationForm({ onLogin, loggedInUser }) {
         onKeyDown={handleKeyPress}
       />
       <Button
-        onClick={handleLogin}
+        onClick={loggedInUser ? handleLogout : handleLog}
         className={`${button["button-base"]} ${button.accent}`}
       >
         {loggedInUser ? "Выйти" : "Войти в профиль"}
