@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./App.module.css";
 import Button from "./components/Button/Button";
 import button from "./components/Button/Button.module.css";
@@ -13,55 +13,13 @@ import Navbar from "./layouts/Navbar/Navbar";
 import MovieList from "./components/MovieList/MovieList";
 import movies from "./moviesData";
 import AuthorizationForm from "./layouts/AuthorizationForm/AuthorizationForm";
-import { UserProvider } from "./components/context/UserContext";
+import { useUserContext } from "./components/context/UserContext";
 
 const text =
   "Введите название фильма, сериала или мультфильма для поиска и добавления в избранное.";
 
 function App() {
-  const [profiles, setProfiles] = useState(() => {
-    const storedProfiles = localStorage.getItem("profiles");
-    return storedProfiles ? JSON.parse(storedProfiles) : [];
-  });
-
-  const [loggedInUser, setLoggedInUser] = useState("");
-
-  useEffect(() => {
-    localStorage.setItem("profiles", JSON.stringify(profiles));
-  }, [profiles]);
-
-  const handleLogin = (userName) => {
-    const existingProfile = profiles.find(
-      (profile) => profile.name === userName
-    );
-
-    if (existingProfile) {
-      setProfiles(
-        profiles.map((profile) =>
-          profile.name === userName ? { ...profile, isLogined: true } : profile
-        )
-      );
-      setLoggedInUser(existingProfile);
-    } else {
-      const newProfile = { name: userName, isLogined: true };
-      setProfiles([...profiles, newProfile]);
-      setLoggedInUser(newProfile);
-    }
-  };
-
-  const handleLogout = (event) => {
-    event.preventDefault();
-    if (loggedInUser) {
-      setProfiles(
-        profiles.map((profile) =>
-          profile.name === loggedInUser.name
-            ? { ...profile, isLogined: false }
-            : profile
-        )
-      );
-      setLoggedInUser("");
-    }
-  };
+  const { loggedInUser, handleLogin, handleLogout } = useUserContext();
 
   const [inputValue, setInputValue] = useState("");
 
@@ -91,58 +49,56 @@ function App() {
   };
 
   return (
-    <UserProvider>
-      <div className={styles.app}>
-        <Header>
-          <Navbar>
-            <Link>Поиск фильмов</Link>
-            <Link count={2} onCounterClick={handleCounterClick}>
-              Мои фильмы
-            </Link>
-            {loggedInUser ? (
-              <>
-                <Link img="./public/icons/avatar.svg">{loggedInUser.name}</Link>{" "}
-                <Link>
-                  <Button onClick={handleLogout}>Выйти</Button>
-                </Link>
-              </>
-            ) : (
+    <div className={styles.app}>
+      <Header>
+        <Navbar>
+          <Link>Поиск фильмов</Link>
+          <Link count={2} onCounterClick={handleCounterClick}>
+            Мои фильмы
+          </Link>
+          {loggedInUser ? (
+            <>
+              <Link img="./public/icons/avatar.svg">{loggedInUser}</Link>{" "}
               <Link>
-                Войти
-                <Button
-                  img="./public/icons/entrance.svg"
-                  onClick={clickWithoutValue}
-                  className={`${button["button-link"]}`}
-                />
+                <Button onClick={handleLogout}>Выйти</Button>
               </Link>
-            )}
-          </Navbar>
-        </Header>
-        <SectionTitle>
-          <Title>Поиск</Title>
-          <Paragraph>{text}</Paragraph>
-        </SectionTitle>
-        <Form>
-          <SearchInput
-            img="./public/icons/search.svg"
-            placeholder="Введите название"
-            value={inputValue}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyPress}
-            onButtonClick={() => console.log("Кнопка поиска нажата")}
-          />
-          <Button
-            onClick={handleButtonClick}
-            text="Искать"
-            className={`${button["button-base"]} ${button.accent}`}
-          >
-            Искать
-          </Button>
-        </Form>
-        <MovieList movies={movies} />
-        <AuthorizationForm />
-      </div>
-    </UserProvider>
+            </>
+          ) : (
+            <Link>
+              Войти
+              <Button
+                img="./public/icons/entrance.svg"
+                onClick={clickWithoutValue}
+                className={`${button["button-link"]}`}
+              />
+            </Link>
+          )}
+        </Navbar>
+      </Header>
+      <SectionTitle>
+        <Title>Поиск</Title>
+        <Paragraph>{text}</Paragraph>
+      </SectionTitle>
+      <Form>
+        <SearchInput
+          img="./public/icons/search.svg"
+          placeholder="Введите название"
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyPress}
+          onButtonClick={() => console.log("Кнопка поиска нажата")}
+        />
+        <Button
+          onClick={handleButtonClick}
+          text="Искать"
+          className={`${button["button-base"]} ${button.accent}`}
+        >
+          Искать
+        </Button>
+      </Form>
+      <MovieList movies={movies} />
+      <AuthorizationForm onLogin={handleLogin} />
+    </div>
   );
 }
 

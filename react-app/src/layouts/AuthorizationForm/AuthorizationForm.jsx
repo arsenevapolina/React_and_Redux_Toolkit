@@ -5,6 +5,7 @@ import Title from "../../components/Title/Title";
 import styles from "./AuthorizationForm.module.css";
 import React, { useState } from "react";
 import { useUserContext } from "../../components/context/UserContext";
+import { UserProvider } from "../../components/context/UserContext";
 
 function AuthorizationForm() {
   const { loggedInUser, handleLogin, handleLogout } = useUserContext();
@@ -30,21 +31,23 @@ function AuthorizationForm() {
   };
 
   return (
-    <div className={styles["form-wrapper"]}>
-      <Title>Вход</Title>
-      <SearchInput
-        placeholder="Ваше имя"
-        value={userName}
-        onChange={handleInputChange}
-        onKeyDown={handleKeyPress}
-      />
-      <Button
-        onClick={loggedInUser ? handleLogout : handleLog}
-        className={`${button["button-base"]} ${button.accent}`}
-      >
-        {loggedInUser ? "Выйти" : "Войти в профиль"}
-      </Button>
-    </div>
+    <UserProvider>
+      <div className={styles["form-wrapper"]}>
+        <Title>Вход</Title>
+        <SearchInput
+          placeholder="Ваше имя"
+          value={userName}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyPress}
+        />
+        <Button
+          onClick={loggedInUser ? handleLogout : handleLog}
+          className={`${button["button-base"]} ${button.accent}`}
+        >
+          {loggedInUser ? "Выйти" : "Войти в профиль"}
+        </Button>
+      </div>
+    </UserProvider>
   );
 }
 
