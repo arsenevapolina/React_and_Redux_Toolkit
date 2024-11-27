@@ -7,8 +7,12 @@ import React, { useState } from "react";
 import { useUserContext } from "../../components/context/UserContext";
 import { UserProvider } from "../../components/context/UserContext";
 
-const AuthorizationForm = ({ onLogin }) => {
-  const { loggedInUser, handleLogin, handleLogout } = useUserContext();
+interface AuthorizationFormProps {
+  onLogin: (userName: string) => void;
+}
+
+const AuthorizationForm: React.FC<AuthorizationFormProps> = ({ onLogin }) => {
+  const { loggedInUser, handleLogout } = useUserContext();
 
   const [userName, setUserName] = useState<string>("");
 

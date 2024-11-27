@@ -1,9 +1,11 @@
 import React from "react";
-import styles from "./Link.module.css";
+import { NavLink } from "react-router-dom"; 
+import styles from "./Links.module.css";
 import Counter from "../Counter/Counter";
-import { LinkProps } from "./Link.types"; 
+import { LinkProps } from "./Links.types";
 
 const Link: React.FC<LinkProps> = ({
+  to, 
   children,
   count,
   onCounterClick,
@@ -11,10 +13,16 @@ const Link: React.FC<LinkProps> = ({
 }) => {
   return (
     <div className={styles["link-container"]}>
-      <a className={`${styles["link-container"]} ${styles.link}`} href="#">
+      <NavLink
+        to={to} 
+        className={({ isActive }) =>
+          
+         `${styles["link"]} ${styles["link-container"]} ${isActive ? styles.activeLink : ""}`
+        } 
+      >
         {children}
         {img && <img src={img} alt="Аватар" />}
-      </a>
+      </NavLink>
       {count !== undefined && (
         <Counter
           count={count}
