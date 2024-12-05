@@ -27,3 +27,4 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 );
 
 export default SearchInput;
+
