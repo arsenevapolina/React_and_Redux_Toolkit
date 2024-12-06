@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, KeyboardEvent } from "react";
+import { useState, ChangeEvent, KeyboardEvent, useEffect } from "react";
 import Button from "../../components/Button/Button";
 import button from "../../components/Button/Button.module.css";
 import Paragraph from "../../components/Paragraph/Paragraph";
@@ -7,9 +7,9 @@ import SearchInput from "../../components/SearchInput/SearchInput";
 import Form from "../../layouts/Form/Form";
 import SectionTitle from "../../layouts/SectionTitle/SectionTitle";
 import MovieList from "../../components/MovieList/MovieList";
-import movies from "../../moviesData";
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { PREFIX } from "../../helpers/API";
+import { IFilm } from "../../interfaces/movie.interface";
 
 const text =
   "Введите название фильма, сериала или мультфильма для поиска и добавления в избранное.";
@@ -22,20 +22,41 @@ export function Home() {
   }, [location]);
 
   const [inputValue, setInputValue] = useState<string>("");
+  const [movies, setMovies] = useState<IFilm[]>([]); 
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
-  const handleButtonClick = (): void => {
-    console.log("Кнопка была нажата, value:", inputValue);
-    setInputValue("");
+  const handleButtonClick = async (): Promise<void> => {
+    if (inputValue) {
+      const moviesData = await fetchMovies(inputValue);
+      console.log(moviesData);
+      setMovies(moviesData); 
+      setInputValue(""); 
+    }
   };
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter") {
       e.preventDefault();
       handleButtonClick();
+    }
+  };
+
+  const fetchMovies = async (query: string) => {
+    try {
+      const response = await fetch(`${PREFIX}${query}`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = (await response.json()) as IFilm[];
+      console.log("Данные из API:", data);
+
+      return data.description || []; 
+    } catch (error) {
+      console.error("Ошибка при получении данных:", error);
+      return [];
     }
   };
 
@@ -52,7 +73,6 @@ export function Home() {
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyPress}
-          onButtonClick={() => console.log("Кнопка поиска нажата")}
         />
         <Button
           onClick={handleButtonClick}
@@ -62,7 +82,7 @@ export function Home() {
           Искать
         </Button>
       </Form>
-      <MovieList movies={movies} />
+      <MovieList movies={movies} /> 
     </>
   );
 }

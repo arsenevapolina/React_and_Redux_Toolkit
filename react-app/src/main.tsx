@@ -8,7 +8,7 @@ import { Login } from "./pages/Login/Login";
 import { MovieDetails } from "./pages/MovieDetails/MovieDetails";
 import { Favorites } from "./pages/Favorites/Favorites";
 import { NotFound } from "./pages/NotFound/NotFound";
-import { Profile  } from "./pages/Profile/Profile";
+import { Profile } from "./pages/Profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
         element: <Favorites />,
       },
       {
-        path: "/wiew",
+        path: "/movie/:IMDB_ID",
         element: <MovieDetails />,
       },
       {

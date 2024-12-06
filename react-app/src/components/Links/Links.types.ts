@@ -4,5 +4,5 @@ export interface LinkProps {
   onCounterClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   img?: string;
   className?: string;
-  to?: string;
+  to: string;
 }

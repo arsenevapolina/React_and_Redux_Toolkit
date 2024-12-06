@@ -5,4 +5,5 @@ export interface MovieCardProps {
   topText: string;
   bottomImage: string;
   bottomText: string;
+  id: number;
 }

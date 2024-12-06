@@ -1,31 +1,24 @@
-import React from "react";
 import styles from "./MovieCard.module.css";
 import Button from "../Button/Button";
 import Rating from "../Rating/Rating";
-import Poster from "../Poster/Poster"; 
+import Poster from "../Poster/Poster";
 import MovieTitle from "../MovieTitle/MovieTitle";
-import { MovieCardProps } from "./MovieCard.types"; 
+import { Link } from "react-router-dom";
+import { MovieCardProps } from "./MovieCard.types";
 
+const MovieCard = ({ movie }) => {
 
-const MovieCard: React.FC<MovieCardProps> = ({
-  title,
-  poster,
-  topImage,
-  topText,
-  bottomImage,
-  bottomText
-}) => {
   return (
-    <div className={`${styles["movie-card"]}`}>
+    <Link to={`/movie/${movie.IMDB_ID}`} className={`${styles["movie-card"]}`}>
       <div className={`${styles["poster-wrapper"]}`}>
         <Poster
-          src={poster}
-          alt={`${title} poster`}
+          src={movie.IMG_POSTER}
+          alt={`${movie.AKA} poster`}
           className={styles["movie-poster"]}
         />
-        <Rating image={topImage} text={topText} />
+        <Rating image="" text={`${movie.RANK}`}/>{" "}
       </div>
-      <MovieTitle text={title} />
+      <MovieTitle text={movie.TITLE} /> 
       <div className={`${styles["bottom-content"]}`}>
         <Button
           variant="image"
@@ -33,15 +26,15 @@ const MovieCard: React.FC<MovieCardProps> = ({
           onClick={() => console.log("Добавлено в избранное")}
         >
           <img
-            src={bottomImage}
+            src="/icons/like.svg"
             alt="Кнопка добавить"
             className={styles["bottom-image"]}
           />
         </Button>
-        <p className={`${styles["bottom-text"]}`}>{bottomText}</p>
+        <p className={`${styles["bottom-text"]}`}>В избранное</p>{" "}}
       </div>
-    </div>
+    </Link>
   );
-}
+};
 
 export default MovieCard;

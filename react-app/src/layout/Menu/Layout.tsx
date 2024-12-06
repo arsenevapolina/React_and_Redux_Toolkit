@@ -7,8 +7,9 @@ import Button from "../../components/Button/Button";
 import styles from "./Layout.module.css";
 import button from "../../components/Button/Button.module.css";
 import { Outlet, useLocation } from "react-router-dom";
+import { LayoutProps } from "./Layout.types";
 
-export const Layout: React.FC = () => {
+export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
