@@ -1,5 +1,5 @@
 export interface UserContextType {
-  loggedInUser: string;
+  loggedInUser: string | null;
   handleLogin: (userName: string) => void;
   handleLogout: () => void;
 }

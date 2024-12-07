@@ -1,9 +1,11 @@
+export interface Movie {
+  "#IMDB_ID": string;
+  "#IMG_POSTER": string;
+  "#AKA": string;
+  "#RANK": number; 
+  "#TITLE": string;
+}
+
 export interface MovieCardProps {
-  title: string;
-  poster: string;
-  topImage: string;
-  topText: string;
-  bottomImage: string;
-  bottomText: string;
-  id: number;
+  movie: Movie;
 }

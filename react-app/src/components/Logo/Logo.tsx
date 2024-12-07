@@ -8,7 +8,7 @@ const Logo: React.FC<LogoProps> = ({ className }) => {
     <Link className={`${styles["logo-link"]} ${className}`}>
       <img
         className={styles.logo}
-        src="./public/icons/logo.svg"
+        src="../public/icons/logo.svg"
         alt="Логотип"
       />
     </Link>

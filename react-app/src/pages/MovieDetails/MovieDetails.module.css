@@ -1,0 +1,26 @@
+.wrapper {
+    margin-top: 51px;
+    background: #20283ECC;
+    backdrop-filter: blur(24px);
+    padding: 40px;
+    max-width: 1050px;
+    margin: auto;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.p {
+    color: #BEB7FB;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+}
+
+.movie-title {
+    color: #EBEEF5;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 40px;
+}
