@@ -12,31 +12,30 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     return storedProfiles ? JSON.parse(storedProfiles) : [];
   });
 
-  const [loggedInUser, setLoggedInUser] = useState<string>(() => {
+  const [loggedInUser, setLoggedInUser] = useState<string | null>(() => {
     const currentProfile = profiles.find((profile) => profile.isLogined);
-    return currentProfile ? currentProfile.name : "";
+    return currentProfile ? currentProfile.name : null;
   });
 
   useEffect(() => {
     localStorage.setItem("profiles", JSON.stringify(profiles));
   }, [profiles]);
 
-  const handleLogin = (userName: string) => {
-    setProfiles((prevProfiles) => {
-      const existingProfile = prevProfiles.find(
-        (profile) => profile.name === userName
-      );
-      if (existingProfile) {
-        return prevProfiles.map((profile) =>
-          profile.name === userName ? { ...profile, isLogined: true } : profile
-        );
-      } else {
-        const newProfile: Profile = { name: userName, isLogined: true };
-        return [...prevProfiles, newProfile];
-      }
-    });
-    setLoggedInUser(userName);
-  };
+   const handleLogin = (userName: string) => {
+     setProfiles((prevProfiles) => {
+       const updatedProfiles = prevProfiles.map((profile) =>
+         profile.name === userName ? { ...profile, isLogined: true } : profile
+       );
+
+       if (!updatedProfiles.find((profile) => profile.name === userName)) {
+         updatedProfiles.push({ name: userName, isLogined: true });
+       }
+
+       return updatedProfiles;
+     });
+
+     setLoggedInUser(userName);
+   };
 
   const handleLogout = () => {
     setProfiles((prevProfiles) =>
@@ -46,7 +45,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
           : profile
       )
     );
-    setLoggedInUser("");
+    setLoggedInUser(null);
   };
 
   return (

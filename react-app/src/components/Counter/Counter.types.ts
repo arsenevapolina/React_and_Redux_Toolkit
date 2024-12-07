@@ -1,4 +1,4 @@
 export interface CounterProps {
-  count: number; 
-  onClick: () => void; 
+  count: number;
+  onClick: () => void;
 }

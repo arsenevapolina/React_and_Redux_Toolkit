@@ -5,9 +5,7 @@ export interface IFilm {
   "#RANK": number;
   "#IMG_POSTER": string;
   "#AKA": string;
+  "ok": boolean;
+  "description": IFilm[];
 }
 
-// export interface IApiResponse {
-//   ok: boolean;
-//   description: IFilm[]; 
-// }
