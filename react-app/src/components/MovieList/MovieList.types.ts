@@ -1,14 +1,14 @@
-// export interface Movie {
-//   id: number;
-//   title: string;
-//   poster: string;
-//   topImage: string;
-//   topText: string;
-//   bottomImage: string;
-//   bottomText: string;
-//   IMDB_ID: string;
-// }
+export interface Movie {
+    "#IMDB_ID": string;
+    "#IMG_POSTER": string;
+    "#AKA": string;
+    "#RANK": number; 
+    "#TITLE": string;
+}
 
-// export interface MovieListProps {
-//   movies: Movie[];
-// }
+export interface MovieListProps {
+    movies: Movie[];
+    isLoading: boolean;
+    error?: string | null; 
+    noResults: boolean;
+}

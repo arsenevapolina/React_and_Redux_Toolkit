@@ -7,15 +7,17 @@ import SearchInput from "../../components/SearchInput/SearchInput";
 import Form from "../../layouts/Form/Form";
 import SectionTitle from "../../layouts/SectionTitle/SectionTitle";
 import MovieList from "../../components/MovieList/MovieList";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PREFIX } from "../../helpers/API";
 import { IFilm } from "../../interfaces/movie.interface";
+import axios, { AxiosError } from "axios";
 
 const text =
   "Введите название фильма, сериала или мультфильма для поиска и добавления в избранное.";
 
 export function Home() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(location);
@@ -23,17 +25,39 @@ export function Home() {
 
   const [inputValue, setInputValue] = useState<string>("");
   const [movies, setMovies] = useState<IFilm[]>([]); 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | undefined>();
+  const [noResults, setNoResults] = useState<boolean>(false); 
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
+    setNoResults(false);
   };
 
   const handleButtonClick = async (): Promise<void> => {
     if (inputValue) {
-      const moviesData = await fetchMovies(inputValue);
-      console.log(moviesData);
-      setMovies(moviesData); 
-      setInputValue(""); 
+      setIsLoading(true);
+      setNoResults(false);
+      try {
+        const moviesData = await fetchMovies(inputValue); 
+        console.log(moviesData);
+        setMovies(moviesData);
+
+        if (moviesData.length === 0) {
+          setNoResults(true); 
+        }
+
+        setInputValue("");
+      } catch (e) {
+        console.error("Ошибка при получении данных:", e);
+        if (e instanceof AxiosError) {
+          setError(e.message);
+        }
+        setIsLoading(false);
+      } finally {
+        setIsLoading(false);
+        console.log("Запрос завершен");
+      }
     }
   };
 
@@ -46,14 +70,11 @@ export function Home() {
 
   const fetchMovies = async (query: string) => {
     try {
-      const response = await fetch(`${PREFIX}${query}`);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = (await response.json()) as IFilm[];
+      const response = await axios.get(`${PREFIX}${query}`);
+      const data = response.data as IFilm[];
       console.log("Данные из API:", data);
 
-      return data.description || []; 
+      return data.description || [];
     } catch (error) {
       console.error("Ошибка при получении данных:", error);
       return [];
@@ -82,7 +103,12 @@ export function Home() {
           Искать
         </Button>
       </Form>
-      <MovieList movies={movies} /> 
+      <MovieList
+        movies={movies}
+        isLoading={isLoading}
+        error={error}
+        noResults={noResults}
+      />
     </>
   );
 }

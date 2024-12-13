@@ -1,15 +1,15 @@
 import React, { MouseEvent, useEffect } from "react";
-import { useUserContext } from "../../components/context/UserContext";
-import Header from "../../components/Header/Header";
-import Navbar from "../../layouts/Navbar/Navbar";
-import Links from "../../components/Links/Links";
-import Button from "../../components/Button/Button";
-import styles from "./Layout.module.css";
-import button from "../../components/Button/Button.module.css";
+import { useUserContext } from "../../../components/context/UserContext";
+import Header from "../../../components/Header/Header";
+import Navbar from "../../../layouts/Navbar/Navbar";
+import Links from "../../../components/Links/Links";
+import Button from "../../../components/Button/Button";
+import styles from "./AuthLayout.module.css";
+import button from "../../../components/Button/Button.module.css";
 import { Outlet, useLocation } from "react-router-dom";
-import { LayoutProps } from "./Layout.types";
+import { AuthLayoutProps } from "./AuthLayout.types";
 
-export const Layout: React.FC<LayoutProps> = ({ children }) => {
+export const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             <Links to="/login">
               Войти
               <Button
-                img="./public/icons/entrance.svg"
+                img="../public/icons/entrance.svg"
                 onClick={() => console.log("Кнопка была нажата")}
                 className={button["button-link"]}
               />

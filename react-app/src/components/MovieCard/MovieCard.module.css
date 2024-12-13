@@ -5,6 +5,8 @@
     backdrop-filter: blur(80px);
     border-radius: 12px;
     max-width: 282px;
+     display: grid;
+     grid-template-rows: 1fr auto;
 }
 
 .poster-wrapper {
