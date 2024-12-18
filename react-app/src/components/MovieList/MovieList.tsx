@@ -3,6 +3,8 @@ import MovieCard from "../MovieCard/MovieCard";
 import styles from "./MovieList.module.css";
 import { MovieListProps } from "./MovieList.types";
 import { NotFound } from "../../pages/NotFound/NotFound";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const MovieList: React.FC<MovieListProps> = ({
   movies,
@@ -10,23 +12,34 @@ const MovieList: React.FC<MovieListProps> = ({
   error,
   noResults,
 }) => {
-   if (isLoading) {
-     return (
-       <div className={`${styles["movie-text"]}`}>Загружаем фильмы...</div>
-     );
-   }
+  const favoriteMovies = useSelector(
+    (state: RootState) => state.favoriteMovies.movies
+  );
 
-   if (noResults) {
-     return <NotFound/>; 
-   }
+  if (isLoading) {
+    return <div className={`${styles["movie-text"]}`}>Загружаем фильмы...</div>;
+  }
+
+  if (noResults) {
+    return <NotFound />;
+  }
 
   return (
     <div className={`${styles["movie-list"]}`}>
       {error && <>{error}</>}
       {!isLoading &&
-        movies.map((movie) => (
-          <MovieCard key={movie["#IMDB_ID"]} movie={movie} />
-        ))}
+        movies.map((movie) => {
+          const isFavorite = favoriteMovies.some(
+            (favMovie) => favMovie["#IMDB_ID"] === movie["#IMDB_ID"]
+          );
+          return (
+            <MovieCard
+              key={movie["#IMDB_ID"]}
+              movie={movie}
+              isFavorite={isFavorite}
+            />
+          );
+        })}
     </div>
   );
 };

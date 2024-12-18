@@ -6,6 +6,7 @@ import styles from "./AuthorizationForm.module.css";
 import React, { useState } from "react";
 import { useUserContext } from "../../components/context/UserContext";
 import { UserProvider } from "../../components/context/UserContext";
+import { Movie } from "../../components/MovieCard/MovieCard.types";
 
 interface AuthorizationFormProps {
   onLogin: (userName: string) => void;
@@ -56,3 +57,11 @@ const AuthorizationForm: React.FC<AuthorizationFormProps> = ({ onLogin }) => {
 };
 
 export default AuthorizationForm;
+function dispatch(arg0: any) {
+  throw new Error("Function not implemented.");
+}
+
+function loadMoviesFromLocalStorage(userName: string): Movie[] {
+  throw new Error("Function not implemented.");
+}
+
