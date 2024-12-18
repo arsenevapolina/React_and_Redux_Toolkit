@@ -21,21 +21,21 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     localStorage.setItem("profiles", JSON.stringify(profiles));
   }, [profiles]);
 
-   const handleLogin = (userName: string) => {
-     setProfiles((prevProfiles) => {
-       const updatedProfiles = prevProfiles.map((profile) =>
-         profile.name === userName ? { ...profile, isLogined: true } : profile
-       );
+  const handleLogin = (userName: string) => {
+    setProfiles((prevProfiles) => {
+      const updatedProfiles = prevProfiles.map((profile) =>
+        profile.name === userName ? { ...profile, isLogined: true } : profile
+      );
 
-       if (!updatedProfiles.find((profile) => profile.name === userName)) {
-         updatedProfiles.push({ name: userName, isLogined: true });
-       }
+      if (!updatedProfiles.find((profile) => profile.name === userName)) {
+        updatedProfiles.push({ name: userName, isLogined: true });
+      }
 
-       return updatedProfiles;
-     });
+      return updatedProfiles;
+    });
 
-     setLoggedInUser(userName);
-   };
+    setLoggedInUser(userName);
+  };
 
   const handleLogout = () => {
     setProfiles((prevProfiles) =>

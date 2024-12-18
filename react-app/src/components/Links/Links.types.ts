@@ -5,4 +5,5 @@ export interface LinkProps {
   img?: string;
   className?: string;
   to: string;
+  username: string;
 }
