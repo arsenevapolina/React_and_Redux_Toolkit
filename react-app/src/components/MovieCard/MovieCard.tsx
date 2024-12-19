@@ -27,8 +27,16 @@ const MovieCard: React.FC<
       <Link to={`/movie/${movie["#IMDB_ID"]}`}>
         <div className={styles["wrapper"]}>
           <div className={`${styles["poster-wrapper"]}`}>
-            <Poster src={movie["#IMG_POSTER"]} alt={movie["#TITLE"]} />
-            <Rating image="" text={movie["#RANK"]} />
+            <Poster
+              src={movie["#IMG_POSTER"]}
+              alt={movie["#TITLE"]}
+              size="small"
+            />
+            <Rating
+              image=""
+              text={movie["#RANK"]}
+              className={`${styles["top-content"]}`}
+            />
           </div>
           <MovieTitle
             className={styles["movie-title"]}
@@ -43,12 +51,12 @@ const MovieCard: React.FC<
         >
           <img
             src={isFavorite ? "/icons/bookmark.svg" : "/icons/like.svg"}
-            alt={isFavorite ? "Удалить из избранного" : "Добавить в избранное"}
+            alt={isFavorite ? "В избранном" : "В избранное"}
             className={styles["bottom-image"]}
           />
         </Button>
         <p className={isFavorite ? styles.favorite : styles.notFavorite}>
-          {isFavorite ? "В избранном" : "Добавить в избранное"}
+          {isFavorite ? "В избранном" : "В избранное"}
         </p>
       </div>
     </div>

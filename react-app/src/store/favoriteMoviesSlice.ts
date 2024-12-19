@@ -51,14 +51,10 @@ const favoriteMoviesSlice = createSlice({
   },
 });
 
+
 export const selectFavoriteMoviesCount = (state: {
   favoriteMovies: FavoriteMoviesState;
 }) => state.favoriteMovies.movies.length;
 
 export const { addMovie, removeMovie, setMovies } = favoriteMoviesSlice.actions;
 export default favoriteMoviesSlice.reducer;
-
-
-
-
-

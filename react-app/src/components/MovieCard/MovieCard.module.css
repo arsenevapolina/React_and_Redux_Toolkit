@@ -4,10 +4,10 @@
     background: #20283ECC;
     backdrop-filter: blur(80px);
     border-radius: 12px;
-    max-width: 282px;
+    /* max-width: 282px; */
     display: grid;
     grid-template-rows: 1fr auto;
-    height: 520px;
+    /* height: 520px; */
 }
 
 .wrapper {
@@ -69,4 +69,17 @@
     line-height: 24px;
     letter-spacing: 0.02em;
     align-self: baseline;
+}
+
+.top-content {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: flex;
+    background: #000000A6;
+    backdrop-filter: blur(8px);
+    padding: 8px;
+    border-radius: 8px;
+    gap: 4px;
+    align-items: center;
 }
