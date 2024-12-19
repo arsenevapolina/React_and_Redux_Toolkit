@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import favoriteMoviesReducer from "./favoriteMoviesSlice";
+import userReducer from "./userSlice";
 
 const store = configureStore({
   reducer: {
     favoriteMovies: favoriteMoviesReducer,
+    user: userReducer,
   },
 });
 
@@ -13,6 +15,7 @@ store.subscribe(() => {
     "favoriteMovies",
     JSON.stringify(state.favoriteMovies.movies)
   );
+  localStorage.setItem("profiles", JSON.stringify(state.user.profiles));
 });
 
 export type RootState = ReturnType<typeof store.getState>;
