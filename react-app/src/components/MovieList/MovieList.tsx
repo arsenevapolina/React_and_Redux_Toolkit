@@ -5,6 +5,7 @@ import { MovieListProps } from "./MovieList.types";
 import { NotFound } from "../../pages/NotFound/NotFound";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import Loader from "../Loader/Loader";
 
 const MovieList: React.FC<MovieListProps> = ({
   movies,
@@ -17,7 +18,7 @@ const MovieList: React.FC<MovieListProps> = ({
   );
 
   if (isLoading) {
-    return <div className={`${styles["movie-text"]}`}>Загружаем фильмы...</div>;
+    return <Loader />;
   }
 
   if (noResults) {

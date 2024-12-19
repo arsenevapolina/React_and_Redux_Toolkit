@@ -24,7 +24,7 @@ const FavoriteMovies: React.FC = () => {
           ))}
         </div>
       ) : (
-        <p className={styles["text"]}>Добавьте фильмы в Избранное</p>
+        <p className={styles["text"]}>Добавьте фильмы в избранное</p>
       )}
     </div>
   );

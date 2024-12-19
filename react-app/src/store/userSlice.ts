@@ -1,14 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Profile } from "./IProfile";
 
+const storedProfiles = localStorage.getItem("profiles");
+const initialProfiles = storedProfiles ? JSON.parse(storedProfiles) : [];
+
+export interface Profile {
+  name: string;
+  isLogined: boolean;
+}
 interface UserState {
   profiles: Profile[];
   loggedInUser: string | null;
 }
 
 const initialState: UserState = {
-  profiles: [],
-  loggedInUser: null,
+  profiles: initialProfiles,
+  loggedInUser:
+    initialProfiles.find((profile) => profile.isLogined)?.name || null,
 };
 
 const userSlice = createSlice({

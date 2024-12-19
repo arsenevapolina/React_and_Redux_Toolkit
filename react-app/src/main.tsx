@@ -8,7 +8,6 @@ import { Login } from "./pages/Login/Login";
 import { MovieDetails } from "./pages/MovieDetails/MovieDetails";
 import FavoriteMovies from "./pages/Favorites/Favorites";
 import { NotFound } from "./pages/NotFound/NotFound";
-import { Profile } from "./pages/Profile/Profile";
 import { DETAILS } from "./helpers/API";
 import axios from "axios";
 import { RequireAuth } from "./helpers/RequireAuth";
@@ -54,10 +53,6 @@ const router = createBrowserRouter([
             throw new Error("Не удалось загрузить данные о фильме");
           }
         },
-      },
-      {
-        path: "/profile",
-        element: <Profile />,
       },
     ],
   },

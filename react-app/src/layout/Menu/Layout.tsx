@@ -1,71 +1,5 @@
-// import React, { MouseEvent, useEffect } from "react";
-// import { useUserContext } from "../../components/context/UserContext";
-// import Header from "../../components/Header/Header";
-// import Navbar from "../../layouts/Navbar/Navbar";
-// import Links from "../../components/Links/Links";
-// import Button from "../../components/Button/Button";
-// import styles from "./Layout.module.css";
-// import button from "../../components/Button/Button.module.css";
-// import { Outlet, useLocation } from "react-router-dom";
-// import { LayoutProps } from "./Layout.types";
-
-// export const Layout: React.FC<LayoutProps> = ({ children }) => {
-//   const location = useLocation();
-
-//   useEffect(() => {
-//     console.log(location);
-//   }, [location]);
-
-//   const { loggedInUser, handleLogout } = useUserContext();
-
-//   const handleCounterClick = (e: MouseEvent<HTMLAnchorElement>): void => {
-//     e.preventDefault();
-//     console.log("Счётчик был нажат");
-//   };
-
-//   return (
-//     <div className={styles.app}>
-//       <Header>
-//         <Navbar>
-//           <Links to="/">Поиск фильмов</Links>
-//           {loggedInUser ? (
-//             <>
-//               <Links
-//                 to="/favorites"
-//                 count={2}
-//                 onCounterClick={handleCounterClick}
-//               >
-//                 Мои фильмы
-//               </Links>
-//               <Links to="/profile" img="../public/icons/avatar.svg">
-//                 {loggedInUser}
-//               </Links>
-//               <Links to="/login">
-//                 <Button onClick={handleLogout}>Выйти</Button>
-//               </Links>
-//             </>
-//           ) : (
-//             <Links to="/login">
-//               Войти
-//               <Button
-//                 img="./public/icons/entrance.svg"
-//                 onClick={() => console.log("Кнопка была нажата")}
-//                 className={button["button-link"]}
-//               />
-//             </Links>
-//           )}
-//         </Navbar>
-//       </Header>
-//       <div>
-//         <Outlet />
-//       </div>
-//     </div>
-//   );
-// };
-
-
 import React, { MouseEvent, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux"; 
+import { useSelector, useDispatch } from "react-redux";
 import Header from "../../components/Header/Header";
 import Navbar from "../../layouts/Navbar/Navbar";
 import Links from "../../components/Links/Links";
@@ -74,12 +8,19 @@ import styles from "./Layout.module.css";
 import button from "../../components/Button/Button.module.css";
 import { Outlet, useLocation } from "react-router-dom";
 import { LayoutProps } from "./Layout.types";
-import { logoutUser } from "../../store/userSlice"; 
+import { logoutUser } from "../../store/userSlice";
+import { RootState } from "../../store/store"; 
+import { useNavigate } from "react-router-dom"; 
 
-export const Layout: React.FC<LayoutProps> = ({ children }) => {
+
+export const Layout: React.FC<LayoutProps> = () => {
   const location = useLocation();
   const dispatch = useDispatch(); 
-  const loggedInUser = useSelector((state) => state.user.loggedInUser); 
+  const navigate = useNavigate();
+
+  const loggedInUser = useSelector(
+    (state: RootState) => state.user.loggedInUser
+  ); 
 
   useEffect(() => {
     console.log(location);
@@ -91,7 +32,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   const handleLogout = () => {
-    dispatch(logoutUser()); 
+    dispatch(logoutUser());
+    navigate("/login");
   };
 
   return (
@@ -108,9 +50,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               >
                 Мои фильмы
               </Links>
-              <Links to="/profile" img="../public/icons/avatar.svg">
-                {loggedInUser}
-              </Links>
+              <Links img="../public/icons/avatar.svg">{loggedInUser}</Links>
               <Links to="/login">
                 <Button onClick={handleLogout}>Выйти</Button>
               </Links>
@@ -119,7 +59,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             <Links to="/login">
               Войти
               <Button
-                img="./public/icons/entrance.svg"
+                img="../public/icons/entrance.svg"
                 onClick={() => console.log("Кнопка была нажата")}
                 className={button["button-link"]}
               />
