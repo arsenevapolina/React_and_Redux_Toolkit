@@ -33,6 +33,7 @@ export const Layout: React.FC<LayoutProps> = () => {
 
   const handleLogout = () => {
     dispatch(logoutUser());
+    localStorage.removeItem("loggedInUser");
     navigate("/login");
   };
 
