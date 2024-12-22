@@ -15,23 +15,23 @@ interface FavoriteMovie {
 }
 
 export function MovieDetails() {
-  const data = useLoaderData<MovieDetailsProps>(); 
+  const data = useLoaderData<MovieDetailsProps>();
   const dispatch = useDispatch();
   const favoriteMovies = useSelector(
     (state: { favoriteMovies: { movies: FavoriteMovie[] } }) =>
       state.favoriteMovies.movies
-  ); 
+  );
 
   const movieData = data.short || {};
   const { name, image, description, review, genre, aggregateRating } =
     movieData;
-  const movieId = movieData["#IMDB_ID"];
+  const movieId = data.imdbId;
 
   const isMovieInFavorites = favoriteMovies.some(
     (movie: FavoriteMovie) => movie["#IMDB_ID"] === movieId
   );
 
-  const [isFavorite, setIsFavorite] = useState<boolean>(isMovieInFavorites); 
+  const [isFavorite, setIsFavorite] = useState<boolean>(isMovieInFavorites);
   useEffect(() => {
     setIsFavorite(isMovieInFavorites);
   }, [favoriteMovies, isMovieInFavorites]);
@@ -40,7 +40,14 @@ export function MovieDetails() {
     if (isFavorite) {
       dispatch(removeMovie({ id: movieId }));
     } else {
-      dispatch(addMovie(movieData));
+      const transformedMovie = {
+        "#IMDB_ID": movieId,
+        "#IMG_POSTER": movieData.image || "",
+        "#AKA": movieData.name || "Неизвестно",
+        "#RANK": aggregateRating?.ratingCount || 0,
+        "#TITLE": movieData.name || "Неизвестно",
+      };
+      dispatch(addMovie(transformedMovie));
     }
     setIsFavorite((prev) => !prev);
   };
