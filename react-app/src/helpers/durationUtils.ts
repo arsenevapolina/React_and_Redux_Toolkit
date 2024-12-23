@@ -1,14 +1,14 @@
-export function parseDuration(isoDuration: string): number | null {
-  if (!isoDuration) {
-    console.error("Invalid ISO 8601 duration:", isoDuration);
+export function parseDuration(isDuration: string): number | null {
+  if (!isDuration) {
+    console.error("Invalid ISO 8601 duration:", isDuration);
     return null;
   }
 
   const regex: RegExp = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/;
-  const match: RegExpMatchArray | null = isoDuration.match(regex);
+  const match: RegExpMatchArray | null = isDuration.match(regex);
 
   if (!match) {
-    console.error("Invalid ISO 8601 duration format:", isoDuration);
+    console.error("Invalid ISO 8601 duration format:", isDuration);
     return null;
   }
 
@@ -18,3 +18,5 @@ export function parseDuration(isoDuration: string): number | null {
 
   return hours * 60 + minutes + seconds / 60;
 }
+
+

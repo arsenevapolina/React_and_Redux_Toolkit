@@ -1,8 +1,24 @@
+export interface FavoriteMovie {
+  "#IMDB_ID": string;
+  "#IMG_POSTER": string;
+  "#AKA": string;
+  "#RANK": number;
+  "#TITLE": string;
+}
+export interface AggregateRating {
+  ratingValue?: string;
+  ratingCount?: number;
+}
 export interface MovieDetailsProps {
-    name: string;
-    image: string;
-    description: string;
-    review: string;
-    genre: string;
-    aggregateRating: number;
+  short?: {
+    name?: string;
+    image?: string;
+    description?: string;
+    genre?: string[];
+    trailer?: {
+      duration?: string;
+    };
+    aggregateRating?: AggregateRating;
+  };
+  imdbId: string;
 }
