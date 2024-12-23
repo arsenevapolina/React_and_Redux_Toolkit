@@ -9,6 +9,7 @@ import { addMovie, removeMovie } from "../../store/favoriteMoviesSlice";
 import { useState, useEffect } from "react";
 import MovieInfo from "../../components/MovieInfo/MovieInfo";
 import MovieReview from "../../components/MovieReview/MovieReview";
+import { parseDuration } from "../../helpers/durationUtils";
 
 interface FavoriteMovie {
   "#IMDB_ID": string;
@@ -52,19 +53,9 @@ export function MovieDetails() {
     setIsFavorite((prev) => !prev);
   };
 
-  const durationString = movieData.trailer?.duration || "PT0H0M0S";
+  const durationString = movieData.trailer?.duration;
+  const totalMinutes = parseDuration(durationString) || 0;
 
-  const convertDurationToMinutes = (duration: string): number => {
-    const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/;
-    const matches = duration.match(regex);
-
-    const hours = parseInt(matches[1] || "0", 10);
-    const minutes = parseInt(matches[2] || "0", 10);
-
-    return hours * 60 + minutes;
-  };
-
-  const totalMinutes = convertDurationToMinutes(durationString);
   const ratingValue = aggregateRating?.ratingValue || "0";
 
   return (
@@ -113,7 +104,7 @@ export function MovieDetails() {
             title="Дата выхода"
             value={review?.dateCreated || "Дата не указана"}
           />
-          <MovieInfo title="Длительность" value={`${totalMinutes} минут`} />
+          <MovieInfo title="Длительность" value={`${totalMinutes} hour`} />
           <MovieInfo
             title="Жанр"
             value={genre?.length ? genre.join(", ") : "Жанр не указан"}
@@ -129,4 +120,3 @@ export function MovieDetails() {
     </div>
   );
 }
-

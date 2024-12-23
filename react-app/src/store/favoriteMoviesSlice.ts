@@ -57,3 +57,5 @@ export const selectFavoriteMoviesCount = (state: {
 
 export const { addMovie, removeMovie, setMovies } = favoriteMoviesSlice.actions;
 export default favoriteMoviesSlice.reducer;
+
+
