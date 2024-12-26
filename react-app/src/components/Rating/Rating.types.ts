@@ -1,4 +1,5 @@
 export interface RatingProps {
   image: string; 
-  text: number; 
+  text: number | string; 
+  className: string;
 }
